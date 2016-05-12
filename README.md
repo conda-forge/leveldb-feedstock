@@ -5,7 +5,7 @@ Home: https://github.com/google/leveldb
 
 Package license: BSD
 
-Feedstock license: BSD
+Feedstock license: BSD 3-Clause
 
 Summary: A fast key-value storage library providing ordered mappings.
 
@@ -69,9 +69,15 @@ Terminology
 
 Current build status
 ====================
+
 Linux: [![Circle CI](https://circleci.com/gh/conda-forge/leveldb-feedstock.svg?style=svg)](https://circleci.com/gh/conda-forge/leveldb-feedstock)
 OSX: [![TravisCI](https://travis-ci.org/conda-forge/leveldb-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/leveldb-feedstock) 
 Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/leveldb-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/leveldb-feedstock/branch/master)
+
+Current release info
+====================
+Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/leveldb/badges/version.svg)](https://anaconda.org/conda-forge/leveldb)
+Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/leveldb/badges/downloads.svg)](https://anaconda.org/conda-forge/leveldb)
 
 
 Updating leveldb-feedstock
