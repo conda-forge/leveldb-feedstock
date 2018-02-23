@@ -1,4 +1,4 @@
-{% set version = "1.18" %}
+{% set version = "1.20" %}
 
 package:
   name: leveldb
