@@ -1,4 +1,4 @@
-{% set version = "1.18" %}
+{% set version = "1.20" %}
 
 package:
   name: leveldb
@@ -7,7 +7,7 @@ package:
 source:
   fn: v{{ version }}.tar.gz
   url: https://github.com/google/leveldb/archive/v{{ version }}.tar.gz
-  sha1: 18684a0ad7a07920d10f5295b171fbf5eeec7337
+  sha1: df11440c30deed5987263730180225db98de9f57
 
 build:
   number: 0
