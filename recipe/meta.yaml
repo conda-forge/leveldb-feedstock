@@ -27,8 +27,7 @@ test:
   commands:
     - test -f ${PREFIX}/lib/libmemenv.a
     - test -f ${PREFIX}/lib/libleveldb.a
-    - test -f ${PREFIX}/lib/libleveldb.dylib            # [osx]
-    - test -f ${PREFIX}/lib/libleveldb.so               # [linux]
+    - test -f ${PREFIX}/lib/libleveldb${SHLIB_EXT}
 
 about:
   home: https://github.com/google/leveldb
