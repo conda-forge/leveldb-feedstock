@@ -33,6 +33,7 @@ test:
 about:
   home: https://github.com/google/leveldb
   license: BSD 3-Clause
+  license_file: LICENSE
   summary: A fast key-value storage library providing ordered mappings.
 
 extra:
