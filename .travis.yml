@@ -7,15 +7,19 @@ os: osx
 osx_image: xcode6.4
 
 env:
+  matrix:
+    - CONFIG=osx_c_compilerclangcxx_compilerclangxx
+    - CONFIG=osx_c_compilertoolchain_ccxx_compilertoolchain_cxx
+
   global:
     # The BINSTAR_TOKEN secure variable. This is defined canonically in conda-forge.yml.
-    - secure: "UBycXqtnTp1ZpRUwHRMryUTbazqrwGJ+d/nn0eugLO9iI0E54HsXau7mj5N/jtz0SP9ghpBZVr9rl2yej3gpOMJx6Ni8r3lkfTjYDw4IXlWYWP4tCkDsoYbg+UMbbcebB2eFJwYaB+0RdghLYmSaT5veKnRzZWbR94Z2w+FYTup9AsP0wMFe81JwFxX7cCmkqZVasOml/FdCXvayQyEAQOT+bvTQnyXWpAKdOd+ePSBqJXDLqrClb13GMllsZNBb331/5ZL8dY7c689Zat+p4E+OfJtFoXvfY1Nh5DIDDlBVN1iYEWL7cFSD5ISeRznJ8KHqyL7MLnceSg9p99Y7h/RyOMr49q4nAaXWCAaKkNfVj7tHD6ZluldI97sRr/efhOXwrRiPxv+xVIephKromdezMWrygvTNcBJzyH1lvh7jA61SmgSKjXE0etohS9d3jpFEGekpmMyEObZZEr/a/LYSJ0ehdk+fvkL9F4te4W9bfKUnVFOLOpYzFU2CKUwpDs8uwY1SeVDdKVNXPD17ibHTow01fZR7a8uQgvwWWw2GTz5GUt99P2HIzh/zqxrGfTCD+RNDNmXOzfB3kUiwxi1G/jxqTXdHsf16ZrEr476e4mJBW10Czy5pyCCybSRj4TlarPqYDiQ937X8QyEZh7x/p7AMoTg4Pz3X4qRTUFc="
+    - secure: "WnGAhxyGUaoQQ8TzUMZWK/ESXbz+XkCMP+5x2d6ltLHQDWjdFJaDgI4gtlc5SGWkY+zjGGApoyhWcCY9OfHwVz3SpEDUJa4ambTLLDPmFgDKTttF0/VJ2PwYqyaeFnlc8Tcv+gtUZ/TM9bEnd8vlN08YDoagiKdlkBlYF7c8IrQhNr8vRDKeRo8qkJzCLXgvgnGYK+zhzQZzZubLufZTmkJaY8mwnL3Vm/PqZMpC2F/Uv+8vnOsstXmhDprwob23AT+wvW8SQl8/8KSm3wriRMjaSKzTJw+QypQk0yCBBOvbcS9mAEYI3JVc2fMnGlUDrUY6FhvfsuDop5rt/OKGno9UFZtXRMigDz7UEsBjpUcaBIHkBIbCTZcpwhXUVX9vnmLiglkUDmu49gbiaoBnuvvlhkaLxWK7ALtL89eCoNsJ1npk5VrpOhy38yaF2U1Dc3DrJibm0+AOnbcGCKWgYFK89RbmG2t8lMQJwyfLsilp6loMGn32HRIEgA3VVXb8BNdGtGq706ADbOYsZVdRvOMyZMBa4fH4F8vh1PJPo5zH2YRI6JL9Q52yITJAF4TddhQY1c8XHS0dx988ObTsstRFXuZ8fwuNYiheLsG/HDhdQ2vp1HhIlGlMQDDPXf2gZ2HdSYH5Rs9vqGzIogPdjeibUmIkliqfY25ohujtIeU="
 
 
 before_install:
     # Fast finish the PR.
     - |
-      (curl https://raw.githubusercontent.com/conda-forge/conda-forge-build-setup-feedstock/master/recipe/ff_ci_pr_build.py | \
+      (curl https://raw.githubusercontent.com/conda-forge/conda-forge-ci-setup-feedstock/branch2.0/recipe/conda_forge_ci_setup/ff_ci_pr_build.py | \
           python - -v --ci "travis" "${TRAVIS_REPO_SLUG}" "${TRAVIS_BUILD_NUMBER}" "${TRAVIS_PULL_REQUEST}") || exit 1
 
     # Remove homebrew.
@@ -43,14 +47,18 @@ install:
       echo ""
       echo "Configuring conda."
       source /Users/travis/miniconda3/bin/activate root
-      conda config --remove channels defaults
-      conda config --add channels defaults
-      conda config --add channels conda-forge
-      conda config --set show_channel_urls true
-      conda install --yes --quiet conda-forge-build-setup
+
+      conda install --yes --quiet conda-forge::conda-forge-ci-setup=2
+      setup_conda_rc ./ ./recipe ./.ci_support/${CONFIG}.yaml
+
       source run_conda_forge_build_setup
 
-script:
-  - conda build ./recipe
+    # compiler cleanup
+    - |
+      mangle_compiler ./ ./recipe ./.ci_support/${CONFIG}.yaml
 
-  - upload_or_check_non_existence ./recipe conda-forge --channel=main
+script:
+  # generate the build number clobber
+  - make_build_number ./ ./recipe ./.ci_support/${CONFIG}.yaml
+  - conda build ./recipe -m ./.ci_support/${CONFIG}.yaml --clobber-file ./.ci_support/clobber_${CONFIG}.yaml
+  - upload_package ./ ./recipe ./.ci_support/${CONFIG}.yaml

@@ -16,6 +16,8 @@ build:
 
 requirements:
   build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - snappy
 
   run:
@@ -36,3 +38,4 @@ about:
 extra:
   recipe-maintainers:
     - jakirkham
+    - xhochy
