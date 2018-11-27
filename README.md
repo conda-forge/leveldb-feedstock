@@ -3,7 +3,7 @@ About leveldb
 
 Home: https://github.com/google/leveldb
 
-Package license: BSD
+Package license: BSD 3-Clause
 
 Feedstock license: BSD 3-Clause
 
