@@ -14,8 +14,8 @@ mkdir -p $PREFIX/include
 mkdir -p $PREFIX/lib
 
 # Move over the libs
-mv out-shared/libleveldb.* $PREFIX/lib/
-mv out-static/lib{leveldb,memenv}.a $PREFIX/lib/
+mv libleveldb.* $PREFIX/lib/
+mv libmemenv.* $PREFIX/lib/
 
 # Move over the includes
 mv include/leveldb $PREFIX/include/
