@@ -16,17 +16,17 @@ build:
 
 requirements:
   build:
+    - cmake
+    - ninja
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+  host:
     - snappy
-
   run:
     - snappy
 
 test:
   commands:
-    - test -f ${PREFIX}/lib/libmemenv.a
-    - test -f ${PREFIX}/lib/libleveldb.a
     - test -f ${PREFIX}/lib/libleveldb${SHLIB_EXT}
 
 about:
