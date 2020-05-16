@@ -11,8 +11,7 @@ source:
   sha256: {{ hash }}
 
 build:
-  number: 0
-  skip: true  # [win]
+  number: 1
 
 requirements:
   build:
@@ -27,7 +26,9 @@ requirements:
 
 test:
   commands:
-    - test -f ${PREFIX}/lib/libleveldb${SHLIB_EXT}
+    - test -f ${PREFIX}/lib/libleveldb${SHLIB_EXT}  # [unix]
+    - if not exist %PREFIX%\\Library\\bin\\leveldb.dll exit 1          # [win]
+    - if not exist %PREFIX%\\Library\\lib\\leveldb.lib exit 1          # [win]
 
 about:
   home: https://github.com/google/leveldb
