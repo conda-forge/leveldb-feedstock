@@ -9,9 +9,11 @@ source:
   fn: {{ version }}.tar.gz
   url: https://github.com/google/leveldb/archive/{{ version }}.tar.gz
   sha256: {{ hash }}
+  patches:
+    0001-dont-disable-rtti.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
