@@ -9,9 +9,11 @@ source:
   fn: {{ version }}.tar.gz
   url: https://github.com/google/leveldb/archive/{{ version }}.tar.gz
   sha256: {{ hash }}
+  patches:
+    0001-dont-disable-rtti.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -32,7 +34,7 @@ test:
 
 about:
   home: https://github.com/google/leveldb
-  license: BSD 3-Clause
+  license: BSD-3-Clause
   license_file: LICENSE
   summary: A fast key-value storage library providing ordered mappings.
 
