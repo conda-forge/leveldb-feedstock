@@ -2,7 +2,7 @@
 
 mkdir build
 pushd build
-cmake \
+cmake ${CMAKE_ARGS} \
   -GNinja \
   -DBUILD_SHARED_LIBS=ON \
   -DLEVELDB_BUILD_TESTS=OFF \
