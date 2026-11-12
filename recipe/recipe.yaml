@@ -2,7 +2,6 @@ schema_version: 1
 
 context:
   version: "1.23"
-  hash: 9a37f8a6174f09bd622bc723b55881dc541cd50747cbd08831c2a82d620f6d76
 
 package:
   name: leveldb
@@ -10,9 +9,9 @@ package:
 
 source:
   url: https://github.com/google/leveldb/archive/${{ version }}.tar.gz
-  sha256: ${{ hash }}
-  file_name: ${{ version }}.tar.gz
-  patches: 0001-dont-disable-rtti.patch
+  sha256: 9a37f8a6174f09bd622bc723b55881dc541cd50747cbd08831c2a82d620f6d76
+  patches:
+    - 0001-dont-disable-rtti.patch
 
 build:
   number: 3
