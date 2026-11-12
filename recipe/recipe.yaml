@@ -1,0 +1,50 @@
+schema_version: 1
+
+context:
+  version: "1.23"
+  hash: 9a37f8a6174f09bd622bc723b55881dc541cd50747cbd08831c2a82d620f6d76
+
+package:
+  name: leveldb
+  version: ${{ version }}
+
+source:
+  url: https://github.com/google/leveldb/archive/${{ version }}.tar.gz
+  sha256: ${{ hash }}
+  file_name: ${{ version }}.tar.gz
+  patches: 0001-dont-disable-rtti.patch
+
+build:
+  number: 3
+
+requirements:
+  build:
+    - cmake
+    - ninja
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+    - ${{ compiler('cxx') }}
+  host:
+    - snappy
+  run:
+    - snappy
+
+tests:
+  - script:
+      - if: unix
+        then: test -f ${PREFIX}/lib/libleveldb${SHLIB_EXT}
+      - if: win
+        then: if not exist %PREFIX%\\Library\\bin\\leveldb.dll exit 1
+      - if: win
+        then: if not exist %PREFIX%\\Library\\lib\\leveldb.lib exit 1
+
+about:
+  license: BSD-3-Clause
+  license_file: LICENSE
+  summary: A fast key-value storage library providing ordered mappings.
+  homepage: https://github.com/google/leveldb
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - xhochy
